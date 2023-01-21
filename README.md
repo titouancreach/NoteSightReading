@@ -6,6 +6,12 @@
   </div>
 
 
+Give it a try: https://titouancreach.github.io/NoteSightReading/
+
+ps1: it's a mobile project so don't open it with your computer browser)
+ps2: if /dashboard is not found: then go to the url again
+
+
 [Week end side project]
 
 Improve your sight reading on various keys (incoming) and complex chords (incoming too)
