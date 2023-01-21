@@ -1,24 +1,15 @@
 import { Area, AreaChart, ResponsiveContainer, XAxis } from "recharts";
 
-export function DashboardChart() {
-  const data = [
-    {
-      name: "Jan",
-      uv: 10,
-    },
-    {
-      name: "Fev",
-      uv: 20,
-    },
-    {
-      name: "Mar",
-      uv: 22,
-    },
-    {
-      name: "Apr",
-      uv: 60,
-    },
-  ];
+export function DashboardChart({
+  history,
+}: {
+  history: { total: number; started_at: Date; uid: string }[];
+}) {
+
+  const data = history.map((h) => ({
+    name: h.started_at.toLocaleDateString("fr-FR", { month:'short', day: 'numeric' }),
+    total: h.total,
+  }));
 
   return (
     <div className="-mx-2">
@@ -42,10 +33,9 @@ export function DashboardChart() {
               <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" />
           <Area
             type="monotone"
-            dataKey="uv"
+            dataKey="total"
             stroke="#8884d8"
             fillOpacity={1}
             fill="url(#colorUv)"

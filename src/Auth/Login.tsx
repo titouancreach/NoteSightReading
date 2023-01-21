@@ -1,6 +1,6 @@
-import { signInWithGoogle } from "../firebase/utils";
 import { MusicalNoteIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../supabase/utils";
 
 export function Login() {
   const navigate = useNavigate();
@@ -19,8 +19,12 @@ export function Login() {
         <button
           type="button"
           onClick={async () => {
-            const u = await signInWithGoogle();
-            if (u) {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+              provider: "google",
+            });
+
+            // should not happen since supabase auth redirect
+            if (error === null) {
               navigate("/dashboard");
             }
           }}

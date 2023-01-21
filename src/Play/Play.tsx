@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { GameSession } from "../firebase/repository";
+import { useNavigate, useParams } from "react-router-dom";
 import { Note } from "./Note";
-import { doc, DocumentData, updateDoc } from "firebase/firestore";
-import { db } from "../firebase/utils";
-import { useDocumentData } from "react-firebase-hooks/firestore";
+import { supabase } from "../supabase/utils";
 
 function remainingSecondFromNow(endTimestamp: number) {
   return Math.floor((endTimestamp - Date.now()) / 1000);
@@ -18,21 +15,24 @@ export function Play() {
   if (gameSessionId === undefined) {
     throw new Error("gameSessionId is undefined");
   }
- const [gameSession, loading, error, snap] =  useDocumentData(doc(db, "game_sessions", gameSessionId))
 
-  if (error) {
-    throw error;
-  }
-
-  useEffect(() => {
-    if (gameSession as GameSession) {
-      setRemainingSeconds(
-        remainingSecondFromNow((gameSession as GameSession).endTime)
-      );
-    }
-  }, [gameSession]);
+  const [gameSession, setGameSession] = useState<any>(null);
 
   const [remainingSeconds, setRemainingSeconds] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      const result = await supabase
+        .from("game_sessions")
+        .select("*")
+        .eq("uid", gameSessionId)
+        .single();
+      setGameSession(result!.data);
+      setRemainingSeconds(
+        remainingSecondFromNow(new Date(result!.data.end_at).getTime())
+      );
+    })();
+  }, [gameSessionId]);
 
   const [buttonText, setButtonText] = useState(possibleNotes);
 
@@ -40,23 +40,27 @@ export function Play() {
     possibleNotes[Math.floor(Math.random() * possibleNotes.length)]
   );
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     let interval: any = 0;
     if (gameSession) {
       interval = setInterval(() => {
         const seconds = remainingSecondFromNow(
-          (gameSession as GameSession).endTime
+          new Date(gameSession.end_at).getTime()
         );
-        //if (seconds <= 0) {
+        if (seconds <= 0) {
         // end game
-        //  clearInterval(interval);
-        //}
+          clearInterval(interval);
+          navigate("/dashboard")
+        }
         setRemainingSeconds(seconds);
       }, 500);
     }
     return () => clearInterval(interval);
   }, [gameSession]);
 
+  // still loading
   if (!gameSession || remainingSeconds === 0) {
     return null;
   }
@@ -75,7 +79,8 @@ export function Play() {
               key={i}
               className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-bold rounded-lg px-5 py-2.5 text-center mr-2 mt-auto mb-6"
               onClick={async (x) => {
-                if (noteLetter === currentNote) { // correct
+                if (noteLetter === currentNote) {
+                  // correct
                   let newNote = currentNote;
                   while (newNote === currentNote) {
                     newNote =
@@ -84,24 +89,16 @@ export function Play() {
                       ];
                   }
 
-                  if (snap?.ref)
-                  {
-                    await updateDoc(snap?.ref, {
-                      successCount: (gameSession as GameSession).successCount + 1,
-                    })
-                  }
-
                   setButtonText(possibleNotes);
                   setCurrentNote(newNote);
                 } else {
-                  if (snap?.ref)
-                  {
-                    await updateDoc(snap?.ref, {
-                      failureCount: (gameSession as GameSession).failureCount + 1,
-                    })
-                  }
                   setButtonText(possibleNotes.replace(noteLetter, "😳"));
                 }
+
+                await supabase.from("attempts").insert({
+                  is_success: noteLetter === currentNote,
+                  game_session_id: gameSessionId,
+                });
               }}
             >
               {noteLetter}
