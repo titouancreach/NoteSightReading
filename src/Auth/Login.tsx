@@ -1,9 +1,11 @@
 import { signInWithGoogle } from "../firebase/utils";
 import { MusicalNoteIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
+  const navigate = useNavigate();
   return (
-    <div className="rounded-lg flex-col flex h-full justify-around bg-gradient-to-r from-[#A1FFCE] to-[#FAFFD1]">
+    <div className="rounded-lg flex-col flex min-h-screen justify-around">
       <div className="text-center m-6">
         <h1 className="text-4xl">Improve your sight reading</h1>
         <h2 className="text-lg mt-4 font-medium">
@@ -16,7 +18,12 @@ export function Login() {
       <div className="flex">
         <button
           type="button"
-          onClick={() => signInWithGoogle()}
+          onClick={async () => {
+            const u = await signInWithGoogle();
+            if (u) {
+              navigate("/dashboard");
+            }
+          }}
           className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:focus:ring-[#4285F4]/55 inline-flex mx-auto"
         >
           <svg
