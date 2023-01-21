@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SessionContext } from "../App";
 import { supabase } from "../supabase/utils";
 import { DashboardChart } from "./DashboardChart";
 import { GameHistoryCard } from "./GameHistoryCard";
@@ -19,19 +20,22 @@ export function Dashboard() {
     attempts_count: number;
   } | null>(null);
 
+  var session = useContext(SessionContext);
+
+
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase
         .from("game_histories")
         .select("*")
-        .eq("user_id", "a5b1f562-0030-4668-82ab-8f110aeb5b76")
+        .eq("user_id", (session as any).user.id)
         .order("started_at", { ascending: false })
         .limit(50);
 
       const { data: data2, error: error2 } = await supabase
         .from("user_stats")
         .select("*")
-        .eq("user_id", "a5b1f562-0030-4668-82ab-8f110aeb5b76")
+        .eq("user_id", (session as any).user.id)
         .limit(1);
 
       if (error) {
