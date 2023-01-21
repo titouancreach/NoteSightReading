@@ -18,18 +18,25 @@ export const SessionContext = React.createContext<Session | null | "loading">(
   "loading"
 );
 
+export function route(path: string) {
+  if ((window.location as any).hostname === "titouancreach.github.io") {
+    return `/NoteSightReading${path}`;
+  }
+  return path;
+}
+
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Navigate to={"/dashboard"} />,
+      path: route("/"),
+      element: <Navigate to={route("/dashboard")} />,
     },
     {
-      path: "/login",
+      path: route("/login"),
       element: <Login />,
     },
     {
-      path: "/dashboard",
+      path: route("/dashboard"),
       element: (
         <RequireAuth>
           <Dashboard />
@@ -37,7 +44,7 @@ function App() {
       ),
     },
     {
-      path: "/play/:gameSessionId",
+      path: route("/play/:gameSessionId"),
       element: <Play />,
     },
   ]);
