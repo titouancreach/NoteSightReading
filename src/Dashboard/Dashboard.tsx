@@ -52,7 +52,7 @@ export function Dashboard() {
         );
 
         if (data2) {
-          if (data2.length == 0) {
+          if (data2.length === 0) {
             setUserStat({
               user_id: "a5b1f562-0030-4668-82ab-8f110aeb5b76",
               best_attempt: 0,
@@ -67,14 +67,14 @@ export function Dashboard() {
     })();
   }, []);
 
-  if (history == null || userStat == null) {
+  if (history === null || userStat === null) {
     return null;
   }
 
   return (
     <div className="rounded-lg flex-col flex min-h-screen px-2">
       <h1 className="text-xl text-center m-6 font-medium">
-        {history.length == 0 ? "Welcome 👋" : "Expert"}
+        {history.length === 0 ? "Welcome 👋" : "Expert"}
       </h1>
 
       <Summary
@@ -88,9 +88,9 @@ export function Dashboard() {
         <DashboardChart history={[...history].reverse()} />
       )}
 
-      {history.length == 1 && (<div className="text-center text-gray-500 mt-10 px-5"> Play at least two games to see your progress curve</div>)}
+      {history.length === 1 && (<div className="text-center text-gray-500 mt-10 px-5"> Play at least two games to see your progress curve</div>)}
 
-      {history.length == 0 && (
+      {history.length === 0 && (
         <div>
           <div className="text-center text-gray-500 mt-10">
             No game history yet
