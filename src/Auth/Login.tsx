@@ -20,10 +20,11 @@ export function Login() {
         <button
           type="button"
           onClick={async () => {
+            console.log(window.location.origin + route("/dashboard"))
             const { data, error } = await supabase.auth.signInWithOAuth({
               provider: "google",
               options: {
-                redirectTo: window.location.origin + route("/dashboard"),
+                redirectTo: window.location.origin + route("/"),
               }
             });
 
