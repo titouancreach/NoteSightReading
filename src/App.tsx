@@ -29,8 +29,8 @@ function App() {
       ),
     },
     {
-      path: "/play",
-      element: <Play endTimestamp={Date.now() + 60000} gameId="34" />,
+      path: "/play/:gameSessionId",
+      element: <Play />,
     },
   ]);
 
