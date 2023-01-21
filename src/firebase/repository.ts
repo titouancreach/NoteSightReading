@@ -21,23 +21,7 @@ export async function createNewGameSession(userId: string) {
     endTime,
     successCount: 0,
     failureCount: 0,
-    tentatives: [],
   });
 
   return doc;
-}
-
-const gameSessionConverter = {
-    fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): GameSession {
-        const data = snapshot.data(options);
-        return { userId: data.userId, startedAt: data.startedAt, endTime: data.endTime, successCount: data.successCount, failureCount: data.failureCount };
-    },
-    toFirestore(gameSession: GameSession): DocumentData {
-        return {}
-    }
-}
-
-export async function getGameSession(gameSessionId: string) {
-  const ref = doc(db, "game_sessions", gameSessionId).withConverter(gameSessionConverter);
-  return await getDoc(ref);
 }

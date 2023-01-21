@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GameSession } from "../firebase/repository";
 import { Note } from "./Note";
-import { useGameSession } from "./hooks";
+import { doc, DocumentData, updateDoc } from "firebase/firestore";
+import { db } from "../firebase/utils";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 function remainingSecondFromNow(endTimestamp: number) {
   return Math.floor((endTimestamp - Date.now()) / 1000);
@@ -16,8 +18,7 @@ export function Play() {
   if (gameSessionId === undefined) {
     throw new Error("gameSessionId is undefined");
   }
-
-  const [gameSession, a, error] = useGameSession(gameSessionId);
+ const [gameSession, loading, error, snap] =  useDocumentData(doc(db, "game_sessions", gameSessionId))
 
   if (error) {
     throw error;
@@ -73,8 +74,8 @@ export function Play() {
             <button
               key={i}
               className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-bold rounded-lg px-5 py-2.5 text-center mr-2 mt-auto mb-6"
-              onClick={(x) => {
-                if (noteLetter === currentNote) {
+              onClick={async (x) => {
+                if (noteLetter === currentNote) { // correct
                   let newNote = currentNote;
                   while (newNote === currentNote) {
                     newNote =
@@ -83,9 +84,22 @@ export function Play() {
                       ];
                   }
 
+                  if (snap?.ref)
+                  {
+                    await updateDoc(snap?.ref, {
+                      successCount: (gameSession as GameSession).successCount + 1,
+                    })
+                  }
+
                   setButtonText(possibleNotes);
                   setCurrentNote(newNote);
                 } else {
+                  if (snap?.ref)
+                  {
+                    await updateDoc(snap?.ref, {
+                      failureCount: (gameSession as GameSession).failureCount + 1,
+                    })
+                  }
                   setButtonText(possibleNotes.replace(noteLetter, "😳"));
                 }
               }}
