@@ -7,7 +7,6 @@ import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
-  useNavigate,
 } from "react-router-dom";
 import { Dashboard } from "./Dashboard/Dashboard";
 import { Play } from "./Play/Play";
