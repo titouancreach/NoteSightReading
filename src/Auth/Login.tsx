@@ -22,6 +22,9 @@ export function Login() {
           onClick={async () => {
             const { data, error } = await supabase.auth.signInWithOAuth({
               provider: "google",
+              options: {
+                redirectTo: window.location.origin + route("/dashboard"),
+              }
             });
 
             // should not happen since supabase auth redirect
