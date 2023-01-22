@@ -6,10 +6,9 @@
   </div>
 
 
-Give it a try: https://titouancreach.github.io/NoteSightReading/
+Give it a try: https://note-sight-reading.vercel.app/
 
 ps1: it's a mobile project so don't open it with your computer browser)
-ps2: if /dashboard is not found: then go to the url again
 
 
 [Week end side project]
