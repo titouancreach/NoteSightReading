@@ -4,7 +4,7 @@ import "./App.css";
 import { supabase } from "./supabase/utils";
 
 import {
-  createBrowserRouter,
+  createHashRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
@@ -26,7 +26,7 @@ export function route(path: string) {
 }
 
 function App() {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: route("/"),
       element: <Navigate to={route("/dashboard")} />,
