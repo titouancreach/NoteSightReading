@@ -22,7 +22,6 @@ export const SessionContext = React.createContext<Session | null | "loading">(
 
 
 function App() {
-  console.log('Load')
   const router = createBrowserRouter([
     {
       path: "/",
