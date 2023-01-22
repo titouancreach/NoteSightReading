@@ -7,6 +7,7 @@ import {
   createHashRouter,
   Navigate,
   RouterProvider,
+  useLocation,
 } from "react-router-dom";
 import { Dashboard } from "./Dashboard/Dashboard";
 import { Play } from "./Play/Play";
@@ -20,16 +21,26 @@ export const SessionContext = React.createContext<Session | null | "loading">(
 
 
 function getBaseName() {
+  console.log(window.location.hostname);
   if ((window.location as any).hostname === "titouancreach.github.io") {
+    console.log('BaseName returned3')
     return "/NoteSightReading";
   }
 }
 
+function LoggerWrapper({ children }: { children: JSX.Element }) {
+  let location = useLocation();
+  debugger
+  console.log('LoggerWrapper')
+  return children;
+}
+
 function App() {
+  console.log('Load')
   const router = createHashRouter([
     {
       path: "/",
-      element: <Navigate to={"/dashboard"} />,
+      element: <LoggerWrapper><Navigate to={"/dashboard"} /></LoggerWrapper>,
     },
     {
       path: "/login",
@@ -47,6 +58,10 @@ function App() {
       path: "/play/:gameSessionId",
       element: <Play />,
     },
+    {
+      path: "*",
+      element: <LoggerWrapper><div></div></LoggerWrapper>,
+    }
   ], { basename: getBaseName() });
 
   const [session, setSession] = useState<Session | null | "loading">("loading");

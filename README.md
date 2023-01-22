@@ -24,3 +24,29 @@ TODO:
   - triade chords
   - jazz chords (half diminished, diminished, augmented, Major7...)
   - chords on both hands (treble + bass key) left hand root and right hand voicings 
+
+
+## Supabase cheatsheet
+
+```
+   API URL       : http://localhost:54321
+          DB URL: postgresql://postgres:postgres@localhost:54322/postgres
+      Studio URL: http://localhost:54323
+    Inbucket URL: http://localhost:54324
+```
+
+Edit database directly via studio or not
+```
+supabase db diff migration_name -f migration_file
+```
+
+push migration to prod
+```
+supabase db push
+```
+
+when pushing to prod, postgres user is used so we need to make him owner of tables or views before:
+
+```
+ALTER TABLE public.user_stats OWNER TO "postgres";
+```
