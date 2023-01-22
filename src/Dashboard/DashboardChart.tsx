@@ -1,9 +1,11 @@
-import { Area, AreaChart, ResponsiveContainer, XAxis } from "recharts";
+import { Area, AreaChart, ResponsiveContainer } from "recharts";
 
 export function DashboardChart({
   history,
+  className,
 }: {
   history: { total: number; started_at: Date; uid: string }[];
+  className?: string;
 }) {
 
   const data = history.map((h) => ({
@@ -12,7 +14,7 @@ export function DashboardChart({
   }));
 
   return (
-    <div className="-mx-2">
+    <div className={className}>
       <ResponsiveContainer
         width="100%"
         aspect={4.0 / 3.0}

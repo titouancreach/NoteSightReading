@@ -72,7 +72,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="rounded-lg flex-col flex min-h-screen px-2">
+    <div className="rounded-lg flex-col flex min-h-screen px-4">
       <h1 className="text-xl text-center m-6 font-medium">
         {history.length === 0 ? "Welcome 👋" : "Expert"}
       </h1>
@@ -85,7 +85,7 @@ export function Dashboard() {
       />
 
       {history.length > 1 && (
-        <DashboardChart history={[...history].reverse()} />
+        <DashboardChart history={[...history].reverse()} className="-mx-4" />
       )}
 
       {history.length === 1 && (<div className="text-center text-gray-500 mt-10 px-5"> Play at least two games to see your progress curve</div>)}
