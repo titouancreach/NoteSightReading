@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Note } from "./Note";
 import { supabase } from "../supabase/utils";
-import { route } from "../App";
 
 function remainingSecondFromNow(endTimestamp: number) {
   return Math.floor((endTimestamp - Date.now()) / 1000);
@@ -53,7 +52,7 @@ export function Play() {
         if (seconds <= 0) {
         // end game
           clearInterval(interval);
-          navigate(route("/dashboard"))
+          navigate("/dashboard")
         }
         setRemainingSeconds(seconds);
       }, 500);

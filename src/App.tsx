@@ -18,25 +18,25 @@ export const SessionContext = React.createContext<Session | null | "loading">(
   "loading"
 );
 
-export function route(path: string) {
+
+function getBaseName() {
   if ((window.location as any).hostname === "titouancreach.github.io") {
-    return `/NoteSightReading${path}`;
+    return "/NoteSightReading";
   }
-  return path;
 }
 
 function App() {
   const router = createHashRouter([
     {
-      path: route("/"),
-      element: <Navigate to={route("/dashboard")} />,
+      path: "/",
+      element: <Navigate to={"/dashboard"} />,
     },
     {
-      path: route("/login"),
+      path: "/login",
       element: <Login />,
     },
     {
-      path: route("/dashboard"),
+      path: "/dashboard",
       element: (
         <RequireAuth>
           <Dashboard />
@@ -44,10 +44,10 @@ function App() {
       ),
     },
     {
-      path: route("/play/:gameSessionId"),
+      path: "/play/:gameSessionId",
       element: <Play />,
     },
-  ]);
+  ], { basename: getBaseName() });
 
   const [session, setSession] = useState<Session | null | "loading">("loading");
 

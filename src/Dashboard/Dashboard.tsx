@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { route, SessionContext } from "../App";
+import { SessionContext } from "../App";
 import { supabase } from "../supabase/utils";
 import { DashboardChart } from "./DashboardChart";
 import { GameHistoryCard } from "./GameHistoryCard";
@@ -119,7 +119,7 @@ export function Dashboard() {
             })
             .select("uid");
 
-          navigate(route("/play/" + inserted!.data![0]!["uid"]));
+          navigate("/play/" + inserted!.data![0]!["uid"]);
         }}
       >
         Start

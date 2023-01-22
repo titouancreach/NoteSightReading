@@ -1,6 +1,5 @@
 import { MusicalNoteIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-import { route } from "../App";
 import { supabase } from "../supabase/utils";
 
 export function Login() {
@@ -20,17 +19,17 @@ export function Login() {
         <button
           type="button"
           onClick={async () => {
-            console.log(window.location.origin + route("/"))
+            console.log(window.location.origin)
             const { data, error } = await supabase.auth.signInWithOAuth({
               provider: "google",
               options: {
-                redirectTo: window.location.origin + route("/"),
+                redirectTo: window.location.origin,
               }
             });
 
             // should not happen since supabase auth redirect
             if (error === null) {
-              navigate(route("/"));
+              navigate("/");
             }
           }}
           className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:focus:ring-[#4285F4]/55 inline-flex mx-auto"
