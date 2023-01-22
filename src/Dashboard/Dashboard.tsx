@@ -22,7 +22,6 @@ export function Dashboard() {
 
   var session = useContext(SessionContext);
 
-
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase
@@ -48,7 +47,11 @@ export function Dashboard() {
 
       if (data) {
         setHistory(
-          data.map((x) => ({ ...x, started_at: new Date(x.started_at) }))
+          data.map((x) => ({
+            started_at: new Date(x.started_at as string),
+            total: x.total as number,
+            uid: x.uid as string,
+          }))
         );
 
         if (data2) {
@@ -60,7 +63,13 @@ export function Dashboard() {
               attempts_count: 0,
             });
           } else {
-            setUserStat(data2[0]);
+            const data = data2[0];
+            setUserStat({
+              attempts_count: data.attempts_count as number,
+              best_attempt: data.best_attempt as number,
+              rank: data.rank as number,
+              user_id: data.user_id as string,
+            });
           }
         }
       }
@@ -88,14 +97,21 @@ export function Dashboard() {
         <DashboardChart history={[...history].reverse()} className="-mx-4" />
       )}
 
-      {history.length === 1 && (<div className="text-center text-gray-500 mt-10 px-5"> Play at least two games to see your progress curve</div>)}
+      {history.length === 1 && (
+        <div className="text-center text-gray-500 mt-10 px-5">
+          {" "}
+          Play at least two games to see your progress curve
+        </div>
+      )}
 
       {history.length === 0 && (
         <div>
           <div className="text-center text-gray-500 mt-10">
             No game history yet
           </div>
-          <div className="text-center text-gray-500 ">Play some games to become a better musician</div>
+          <div className="text-center text-gray-500 ">
+            Play some games to become a better musician
+          </div>
         </div>
       )}
 
@@ -114,8 +130,8 @@ export function Dashboard() {
             .from("game_sessions")
             .insert({
               user_id: data.session?.user.id,
-              started_at: new Date(),
-              end_at: new Date(new Date().getTime() + 60 * 1000),
+              started_at: new Date().toISOString(),
+              end_at: new Date(new Date().getTime() + 60 * 1000).toISOString(),
             })
             .select("uid");
 

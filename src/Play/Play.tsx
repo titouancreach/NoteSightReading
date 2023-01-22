@@ -29,7 +29,7 @@ export function Play() {
         .single();
       setGameSession(result!.data);
       setRemainingSeconds(
-        remainingSecondFromNow(new Date(result!.data.end_at).getTime())
+        remainingSecondFromNow(new Date(result!.data!.end_at as string).getTime())
       );
     })();
   }, [gameSessionId]);
