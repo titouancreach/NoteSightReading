@@ -5,7 +5,7 @@ import { supabase } from "../supabase/utils";
 export function Login() {
   const navigate = useNavigate();
   return (
-    <div className="rounded-lg flex-col flex min-h-screen justify-around">
+    <div className="rounded-lg flex-col flex min-h-screen justify-around px-4 max-w-xl m-auto">
       <div className="text-center m-6">
         <h1 className="text-4xl">Improve your sight reading</h1>
         <h2 className="text-lg mt-4 font-medium">

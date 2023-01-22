@@ -81,7 +81,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="rounded-lg flex-col flex min-h-screen px-4">
+    <div className="rounded-lg flex-col flex min-h-screen px-4 max-w-xl m-auto">
       <h1 className="text-xl text-center m-6 font-medium">
         {history.length === 0 ? "Welcome 👋" : "Expert"}
       </h1>

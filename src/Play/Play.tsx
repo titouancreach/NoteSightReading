@@ -66,7 +66,7 @@ export function Play() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col px-4 max-w-xl m-auto">
       <div className="flex justify-center mt-4">
         <div className="text-2xl font-bold">{remainingSeconds}</div>
       </div>
