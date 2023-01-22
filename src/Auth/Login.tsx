@@ -19,7 +19,7 @@ export function Login() {
         <button
           type="button"
           onClick={async () => {
-            console.log(window.location.origin)
+            console.log("challenge oauth with redirectUri: "+ window.location.origin);
             const { data, error } = await supabase.auth.signInWithOAuth({
               provider: "google",
               options: {
