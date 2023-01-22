@@ -17,8 +17,6 @@ Improve your sight reading on various keys (incoming) and complex chords (incomi
 This use [Supabase](https://supabase.com/) for auth and data storage, Reactjs and tailwind.
 
 TODO: 
-  - use hash router since I have no server ☹️
-
   - bass clef
   - triade chords
   - jazz chords (half diminished, diminished, augmented, Major7...)
@@ -28,7 +26,7 @@ TODO:
 ## Supabase cheatsheet
 
 ```
-   API URL       : http://localhost:54321
+        API URL : http://localhost:54321
           DB URL: postgresql://postgres:postgres@localhost:54322/postgres
       Studio URL: http://localhost:54323
     Inbucket URL: http://localhost:54324
