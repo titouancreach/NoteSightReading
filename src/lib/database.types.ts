@@ -57,21 +57,41 @@ export interface Database {
       game_sessions: {
         Row: {
           end_at: string | null
+          game_type_code: string
           started_at: string | null
           uid: string
           user_id: string | null
         }
         Insert: {
           end_at?: string | null
+          game_type_code: string
           started_at?: string | null
           uid?: string
           user_id?: string | null
         }
         Update: {
           end_at?: string | null
+          game_type_code?: string
           started_at?: string | null
           uid?: string
           user_id?: string | null
+        }
+      }
+      ref_game_types: {
+        Row: {
+          code: string
+          label: string | null
+          subtitle: string | null
+        }
+        Insert: {
+          code: string
+          label?: string | null
+          subtitle?: string | null
+        }
+        Update: {
+          code?: string
+          label?: string | null
+          subtitle?: string | null
         }
       }
     }

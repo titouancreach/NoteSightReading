@@ -13,26 +13,24 @@ import { Play } from "./Play/Play";
 import { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import React from "react";
+import { GameSelector } from "./GameSelection/GameSelection";
 
 export const SessionContext = React.createContext<Session | null | "loading">(
   "loading"
 );
 
-
-
-
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Navigate to={"/dashboard"} />
+      element: <Navigate to={"/dashboard"} />,
     },
     {
       path: "/login",
       element: <Login />,
     },
     {
-      path: "/dashboard",
+      path: "/dashboard/:gameType",
       element: (
         <RequireAuth>
           <Dashboard />
@@ -42,6 +40,14 @@ function App() {
     {
       path: "/play/:gameSessionId",
       element: <Play />,
+    },
+    {
+      path: "/game-selection",
+      element: (
+        <RequireAuth>
+          <GameSelector />
+        </RequireAuth>
+      ),
     },
   ]);
 

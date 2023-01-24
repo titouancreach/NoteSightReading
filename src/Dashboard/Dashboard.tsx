@@ -132,6 +132,7 @@ export function Dashboard() {
               user_id: data.session?.user.id,
               started_at: new Date().toISOString(),
               end_at: new Date(new Date().getTime() + 60 * 1000).toISOString(),
+              game_type_code: 'FIND_NOTE_NAME',
             })
             .select("uid");
 
