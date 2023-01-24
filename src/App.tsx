@@ -23,7 +23,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Navigate to={"/dashboard"} />,
+      element: <Navigate to={"/game-selection"} />,
     },
     {
       path: "/login",
