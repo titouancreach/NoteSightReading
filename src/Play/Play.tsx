@@ -16,7 +16,7 @@ export function Play() {
     throw new Error("gameSessionId is undefined");
   }
 
-  const [gameSession, setGameSession] = useState<any>(null);
+  const [gameSession, setGameSession] = useState<{ end_at: string | null, game_type_code: string, started_at: string | null, uid: string, user_id: string | null } | null>(null);
 
   const [remainingSeconds, setRemainingSeconds] = useState(0);
 
@@ -27,7 +27,7 @@ export function Play() {
         .select("*")
         .eq("uid", gameSessionId)
         .single();
-      setGameSession(result!.data);
+      setGameSession(result.data);
       setRemainingSeconds(
         remainingSecondFromNow(new Date(result!.data!.end_at as string).getTime())
       );
@@ -47,12 +47,12 @@ export function Play() {
     if (gameSession) {
       interval = setInterval(() => {
         const seconds = remainingSecondFromNow(
-          new Date(gameSession.end_at).getTime()
+          new Date(gameSession.end_at!).getTime()
         );
         if (seconds <= 0) {
         // end game
           clearInterval(interval);
-          navigate("/dashboard")
+          navigate(`/dashboard/${gameSession.game_type_code}`)
         }
         setRemainingSeconds(seconds);
       }, 500);
