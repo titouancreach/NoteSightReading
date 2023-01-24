@@ -30,7 +30,7 @@ function App() {
       element: <Login />,
     },
     {
-      path: "/dashboard/:gameType",
+      path: "/dashboard/:gameTypeCode",
       element: (
         <RequireAuth>
           <Dashboard />

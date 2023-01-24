@@ -98,6 +98,7 @@ export interface Database {
     Views: {
       game_histories: {
         Row: {
+          game_type_code: string | null
           started_at: string | null
           total: number | null
           uid: string | null
@@ -108,6 +109,7 @@ export interface Database {
         Row: {
           attempts_count: number | null
           best_attempt: number | null
+          game_type_code: string | null
           rank: number | null
           user_id: string | null
         }

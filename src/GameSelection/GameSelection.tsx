@@ -24,7 +24,7 @@ export function GameSelector() {
       <div className="flex flex-col space-y-6">
         {gameList &&
           gameList?.map((game) => (
-            <Link to={`/dashboard/${game.code}}`}
+            <Link to={`/dashboard/${game.code}`}
               className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 rounded-lg px-5 py-2.5 mr-2 flex items-center"
             >
               <svg

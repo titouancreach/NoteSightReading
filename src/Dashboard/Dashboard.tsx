@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../App";
 import { supabase } from "../supabase/utils";
 import { DashboardChart } from "./DashboardChart";
@@ -8,6 +8,9 @@ import { Summary } from "./Summary";
 
 export function Dashboard() {
   const navigate = useNavigate();
+
+  const { gameTypeCode } = useParams();
+
 
   const [history, setHistory] = useState<
     { total: number; started_at: Date; uid: string }[] | null
@@ -29,12 +32,14 @@ export function Dashboard() {
         .select("*")
         .eq("user_id", (session as any).user.id)
         .order("started_at", { ascending: false })
+        .eq("game_type_code", gameTypeCode)
         .limit(50);
 
       const { data: data2, error: error2 } = await supabase
         .from("user_stats")
         .select("*")
         .eq("user_id", (session as any).user.id)
+        .eq("game_type_code", gameTypeCode)
         .limit(1);
 
       if (error) {
@@ -74,9 +79,14 @@ export function Dashboard() {
         }
       }
     })();
-  }, []);
+  }, [gameTypeCode, session]);
 
   if (history === null || userStat === null) {
+    return null;
+  }
+
+  if (gameTypeCode === undefined) {
+    navigate("/game-selection");
     return null;
   }
 
@@ -132,7 +142,7 @@ export function Dashboard() {
               user_id: data.session?.user.id,
               started_at: new Date().toISOString(),
               end_at: new Date(new Date().getTime() + 60 * 1000).toISOString(),
-              game_type_code: 'FIND_NOTE_NAME',
+              game_type_code: gameTypeCode
             })
             .select("uid");
 
