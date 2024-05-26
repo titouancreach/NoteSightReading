@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Factory, Formatter, Stave, StaveNote, TickContext } from "vexflow";
 
-export function Note({ note }: { note: string}) {
+export function Note({ note }: { note: string }) {
   const output = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -14,7 +14,9 @@ export function Note({ note }: { note: string}) {
     const staveMeasure1 = new Stave(10, 0, 300);
     staveMeasure1.addClef("treble").setContext(context).draw();
 
-    const notesMeasure1 = [new StaveNote({ keys: [`${note}/4`], duration: "q" })];
+    const notesMeasure1 = [
+      new StaveNote({ keys: [`${note}/4`], duration: "q" }),
+    ];
 
     context.scale(1.8, 1.8);
     Formatter.FormatAndDraw(context, staveMeasure1, notesMeasure1);
