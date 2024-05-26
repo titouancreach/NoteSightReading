@@ -28,5 +28,5 @@ FROM (
     ) security
 WHERE security.user_id = auth.uid()
     OR CURRENT_USER = 'postgres'::name
-    OR CURRENT_USER = 'supabase_admin'::name;
+    OR CURRENT_USER = 'postgres'::name;
 

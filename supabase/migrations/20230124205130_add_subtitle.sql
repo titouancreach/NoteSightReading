@@ -18,7 +18,7 @@ create or replace view "public"."user_stats" as  SELECT security.user_id,
                    FROM attempts
                   GROUP BY attempts.game_session_id) q ON ((q.game_session_id = gs.uid)))
           GROUP BY gs.user_id) security
-  WHERE ((security.user_id = auth.uid()) OR (CURRENT_USER = 'postgres'::name) OR (CURRENT_USER = 'supabase_admin'::name));
+  WHERE ((security.user_id = auth.uid()) OR (CURRENT_USER = 'postgres'::name) OR (CURRENT_USER = 'postgres'::name));
 
 
 update ref_game_types set subtitle = 'Guess the note displayed on stave' where code = 'FIND_NOTE_NAME';

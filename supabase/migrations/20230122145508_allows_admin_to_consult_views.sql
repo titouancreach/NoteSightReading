@@ -11,7 +11,7 @@ create or replace view "public"."game_histories" as  SELECT g.uid,
                 END) AS total
            FROM attempts
           GROUP BY attempts.game_session_id) q ON ((q.game_session_id = g.uid)))
-  WHERE ((g.user_id = auth.uid()) OR (CURRENT_USER = 'postgres'::name) OR (CURRENT_USER = 'supabase_admin'::name));
+  WHERE ((g.user_id = auth.uid()) OR (CURRENT_USER = 'postgres'::name) OR (CURRENT_USER = 'postgres'::name));
 
 
 create or replace view "public"."user_stats" as  SELECT security.user_id,
@@ -32,7 +32,7 @@ create or replace view "public"."user_stats" as  SELECT security.user_id,
                    FROM attempts
                   GROUP BY attempts.game_session_id) q ON ((q.game_session_id = gs.uid)))
           GROUP BY gs.user_id) security
-  WHERE ((security.user_id = auth.uid()) OR (CURRENT_USER = 'postgres'::name) OR (CURRENT_USER = 'supabase_admin'::name));
+  WHERE ((security.user_id = auth.uid()) OR (CURRENT_USER = 'postgres'::name) OR (CURRENT_USER = 'postgres'::name));
 
 
 
