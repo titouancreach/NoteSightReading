@@ -8,20 +8,18 @@
 
 Give it a try: https://note-sight-reading.vercel.app/
 
-ps1: it's a mobile project so don't open it with your computer browser)
-
+ps1: It's a mobile project so don't open it with your computer browser.
 
 [Week end side project]
 
 Improve your sight reading on various keys (incoming) and complex chords (incoming too)
-This use [Supabase](https://supabase.com/) for auth and data storage, Reactjs and tailwind.
+This use [Supabase](https://supabase.com/) for auth and data storage, React and Tailwind.
 
 TODO: 
   - bass clef
   - triade chords
   - jazz chords (half diminished, diminished, augmented, Major7...)
   - chords on both hands (treble + bass key) left hand root and right hand voicings 
-
 
 ## Supabase cheatsheet
 
@@ -40,10 +38,4 @@ supabase db diff migration_name -f migration_file
 push migration to prod
 ```
 supabase db push
-```
-
-when pushing to prod, postgres user is used so we need to make him owner of tables or views before:
-
-```
-ALTER TABLE public.user_stats OWNER TO "postgres";
 ```
